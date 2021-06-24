@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 // Route to /notes.html
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'public/notes.html')));
 
-// API get request to obtain notes from db.json
+// API get to db
 app.get('/api/notes', (req, res) => {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if(err){ res.status(400).json(err) }; 
@@ -24,7 +24,7 @@ app.get('/api/notes', (req, res) => {
     });     
 });
 
-// Default Route -> has to be under all other app.get's
+// default route. must be under other gets
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')));
 
 // Post Route to read then rewrite db.json, adding the new note
@@ -48,11 +48,6 @@ app.post('/api/notes', (req, res) => {
 
     res.redirect('/')
 })
-
-// will attempt app.delete later.
-// app.delete('/api/notes/:id', (req, res) => {
-//     let trashedNote
-// })
 
 // Listener 
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
